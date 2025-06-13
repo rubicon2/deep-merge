@@ -1,0 +1,36 @@
+{
+  "name": "@rubicon2/deep-merge",
+  "version": "1.0.0",
+  "description": "Deeply merge javascript objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubicon2/deep-merge.git"
+  },
+  "keywords": [
+    "merge",
+    "objects",
+    "deep",
+    "deeply",
+    "recursive",
+    "recursively"
+  ],
+  "author": "rubicon2",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/rubicon2/deep-merge/issues"
+  },
+  "homepage": "https://github.com/rubicon2/deep-merge#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-jest": "^28.13.5",
+    "globals": "^16.2.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.5.3"
+  }
+}

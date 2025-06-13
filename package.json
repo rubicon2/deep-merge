@@ -1,6 +1,6 @@
 {
   "name": "@rubicon2/deep-merge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Deeply merge javascript objects",
   "main": "index.js",
   "scripts": {

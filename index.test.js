@@ -85,6 +85,26 @@ describe('objectMerge', () => {
     });
   });
 
+  it('should put an object and a value into an array', () => {
+    const objA = {
+      a: {
+        b: { d: 'some string or whatever' },
+      },
+    };
+
+    const objB = {
+      a: {
+        b: 97,
+      },
+    };
+
+    expect(deepMerge(objA, objB)).toEqual({
+      a: {
+        b: [{ d: 'some string or whatever' }, 97],
+      },
+    });
+  });
+
   it('should merge values from two arrays into one array', () => {
     const objA = {
       a: [1, 2],
@@ -140,5 +160,38 @@ describe('objectMerge', () => {
         b: 'myValue',
       },
     });
+  });
+
+  it('should use provided duplicateKeyHandler if provided as a property on the 3rd parameter', () => {
+    const objA = {
+      a: {
+        b: 'c',
+      },
+    };
+
+    const objB = {
+      a: {
+        b: 'd',
+      },
+    };
+
+    function conflictHandler(a, b) {
+      return 'it worked!';
+    }
+
+    expect(deepMerge(objA, objB, conflictHandler)).toEqual({
+      a: {
+        b: 'it worked!',
+      },
+    });
+  });
+
+  it('should put top-level non-object values into an array', () => {
+    const a = 97;
+    const b = {
+      myString: 'mega',
+    };
+
+    expect(deepMerge(a, b)).toEqual([97, { myString: 'mega' }]);
   });
 });

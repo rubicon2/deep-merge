@@ -1,6 +1,6 @@
 function mergeIntoArray(a, b) {
-  // Merge no matter whether a, or b, or neither, or both are arrays already.
-  return [a, b].flat();
+  // Merge no matter whether a, or b, or neither, or both are arrays already. Remove any undefined values.
+  return [a, b].flat().filter((v) => v !== undefined);
 }
 
 function deepMerge(

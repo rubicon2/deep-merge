@@ -119,48 +119,114 @@ describe('objectMerge', () => {
     });
   });
 
-  it('should work with null values', () => {
-    const objA = {
-      a: {
-        b: null,
+  it.each([
+    {
+      title: 'null value & value',
+      objA: {
+        a: {
+          b: null,
+        },
       },
-    };
+      objB: {
+        a: {
+          b: 'myValue',
+          c: null,
+        },
+      },
+      result: { a: { b: [null, 'myValue'], c: null } },
+    },
+    {
+      title: 'value & null value',
+      objA: {
+        a: {
+          b: 'myValue',
+        },
+      },
+      objB: {
+        a: {
+          b: null,
+          c: null,
+        },
+      },
+      result: { a: { b: ['myValue', null], c: null } },
+    },
+    {
+      title: 'array & value',
+      objA: { a: [1, 2] },
+      objB: { a: null },
+      result: { a: [1, 2, null] },
+    },
+    {
+      title: 'value & array',
+      objA: { a: null },
+      objB: { a: [1, 2] },
+      result: { a: [null, 1, 2] },
+    },
+    {
+      title: 'array with undefined element & array',
+      objA: { a: [1, 2] },
+      objB: { a: [null, 3] },
+      result: { a: [1, 2, null, 3] },
+    },
+    {
+      title: 'array & array with undefined element',
+      objA: { a: [null, 1] },
+      objB: { a: [2, 3] },
+      result: { a: [null, 1, 2, 3] },
+    },
+  ])(
+    'should merge null values like any other defined value, in configuration: $title',
+    ({ objA, objB, result }) => {
+      expect(deepMerge(objA, objB)).toEqual(result);
+    },
+  );
 
-    const objB = {
-      a: {
-        b: 'myValue',
-        c: null,
+  it.each([
+    {
+      title: 'value & value',
+      objA: {
+        a: {
+          b: undefined,
+        },
       },
-    };
-
-    expect(deepMerge(objA, objB)).toEqual({
-      a: {
-        b: [null, 'myValue'],
-        c: null,
+      objB: {
+        a: {
+          b: 'myValue',
+          c: undefined,
+        },
       },
-    });
-  });
-
-  it('should ignore undefined values', () => {
-    const objA = {
-      a: {
-        b: undefined,
-      },
-    };
-
-    const objB = {
-      a: {
-        b: 'myValue',
-        c: undefined,
-      },
-    };
-
-    expect(deepMerge(objA, objB)).toEqual({
-      a: {
-        b: 'myValue',
-      },
-    });
-  });
+      result: { a: { b: 'myValue' } },
+    },
+    {
+      title: 'array & value',
+      objA: { a: [1, 2] },
+      objB: { a: undefined },
+      result: { a: [1, 2] },
+    },
+    {
+      title: 'value & array',
+      objA: { a: undefined },
+      objB: { a: [1, 2] },
+      result: { a: [1, 2] },
+    },
+    {
+      title: 'array with undefined element & array',
+      objA: { a: [1, 2] },
+      objB: { a: [undefined, 3] },
+      result: { a: [1, 2, 3] },
+    },
+    {
+      title: 'array & array with undefined element',
+      objA: { a: [undefined, 1] },
+      objB: { a: [2, 3] },
+      result: { a: [1, 2, 3] },
+    },
+  ])(
+    'should ignore undefined values in configuration: $title',
+    ({ objA, objB, result }) => {
+      expect(deepMerge(objA, objB)).toEqual(result);
+    },
+  );
 
   it('should use provided duplicateKeyHandler if provided as a property on the 3rd parameter', () => {
     const objA = {
